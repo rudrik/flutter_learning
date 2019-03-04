@@ -12,7 +12,7 @@ class MyFlutterApp extends StatelessWidget {
             appBar: AppBar(
               title: Text("My First app screen"),
             ),
-            body: getListView()));
+            body: getLongListView()));
   }
 }
 
@@ -40,5 +40,26 @@ Widget getListView() {
       Container(color: Colors.red, height: 30.0)
     ],
   );
+  return listView;
+}
+
+List<String> getListElements() {
+  var items = List<String>.generate(1000, (counter) => "Item $counter");
+  return items;
+}
+
+Widget getLongListView() {
+  var listItem = getListElements();
+  var listView = ListView.builder(itemBuilder: (context, index) {
+    if (index < listItem.length)
+      return ListTile(
+        leading: Icon(Icons.arrow_right),
+        title: Text(listItem[index]),
+        onTap: () {
+          debugPrint('${listItem[index]} was tapped');
+        },
+      );
+  });
+
   return listView;
 }
