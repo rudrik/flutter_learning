@@ -6,14 +6,36 @@ class MyFlutterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "My Materaial App",
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text("My First app screen"),
-            ),
-            body: getLongListView()));
+      debugShowCheckedModeBanner: false,
+      title: "My Materaial App",
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("My First app screen"),
+        ),
+        body: getLongListView(),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            tooltip: "Add One More Item",
+            onPressed: () {
+              debugPrint("FAB Clicked");
+            }),
+      ),
+    );
   }
+}
+
+void showSnackBar(BuildContext context, String listItem) {
+  var snackBar = SnackBar(
+    content: Text("You just tapped $listItem"),
+    duration: Duration(milliseconds: 500),
+    action: SnackBarAction(
+        label: "UNDO",
+        onPressed: () {
+          debugPrint("Permfoming dummy undo.");
+        }),
+  );
+
+  Scaffold.of(context).showSnackBar(snackBar);
 }
 
 Widget getListView() {
@@ -56,7 +78,7 @@ Widget getLongListView() {
         leading: Icon(Icons.arrow_right),
         title: Text(listItem[index]),
         onTap: () {
-          debugPrint('${listItem[index]} was tapped');
+          showSnackBar(context, listItem[index]);
         },
       );
   });
