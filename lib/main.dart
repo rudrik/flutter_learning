@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './app_screens/home.dart';
-
 void main() => runApp(new MyFlutterApp());
 
 class MyFlutterApp extends StatelessWidget {
@@ -14,6 +12,33 @@ class MyFlutterApp extends StatelessWidget {
             appBar: AppBar(
               title: Text("My First app screen"),
             ),
-            body: Home()));
+            body: getListView()));
   }
+}
+
+Widget getListView() {
+  var listView = ListView(
+    children: <Widget>[
+      ListTile(
+        leading: Icon(Icons.landscape),
+        title: Text("Landscape"),
+        subtitle: Text("Nice View"),
+        trailing: Icon(Icons.wb_sunny),
+        onTap: () {
+          debugPrint("TAPPED!");
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.android),
+        title: Text("Android"),
+      ),
+      ListTile(
+        leading: Icon(Icons.devices),
+        title: Text("Samsung"),
+      ),
+      Text("Another text element"),
+      Container(color: Colors.red, height: 30.0)
+    ],
+  );
+  return listView;
 }
