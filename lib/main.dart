@@ -1,87 +1,49 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyFlutterApp());
+void main() {
+  runApp(MaterialApp(
+    title: "StateFul App Example",
+    home: FavouriteCity(),
+  ));
+}
 
-class MyFlutterApp extends StatelessWidget {
+class FavouriteCity extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "My Materaial App",
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("My First app screen"),
-        ),
-        body: getLongListView(),
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            tooltip: "Add One More Item",
-            onPressed: () {
-              debugPrint("FAB Clicked");
-            }),
-      ),
-    );
+  State<StatefulWidget> createState() {
+    return _FavouriteCityState();
   }
 }
 
-void showSnackBar(BuildContext context, String listItem) {
-  var snackBar = SnackBar(
-    content: Text("You just tapped $listItem"),
-    duration: Duration(milliseconds: 500),
-    action: SnackBarAction(
-        label: "UNDO",
-        onPressed: () {
-          debugPrint("Permfoming dummy undo.");
-        }),
-  );
+class _FavouriteCityState extends State<FavouriteCity> {
+  String nameCity = "";
 
-  Scaffold.of(context).showSnackBar(snackBar);
-}
-
-Widget getListView() {
-  var listView = ListView(
-    children: <Widget>[
-      ListTile(
-        leading: Icon(Icons.landscape),
-        title: Text("Landscape"),
-        subtitle: Text("Nice View"),
-        trailing: Icon(Icons.wb_sunny),
-        onTap: () {
-          debugPrint("TAPPED!");
-        },
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Stateful App Example"),
       ),
-      ListTile(
-        leading: Icon(Icons.android),
-        title: Text("Android"),
+      body: Container(
+        margin: EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              onSubmitted: (String userInput) {
+                setState(() {
+                  nameCity = userInput;
+                });
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.all(30.0),
+              child: Text(
+                "Your City is $nameCity",
+                style: TextStyle(fontSize: 20.0),
+              ),
+            )
+          ],
+        ),
       ),
-      ListTile(
-        leading: Icon(Icons.devices),
-        title: Text("Samsung"),
-      ),
-      Text("Another text element"),
-      Container(color: Colors.red, height: 30.0)
-    ],
-  );
-  return listView;
-}
-
-List<String> getListElements() {
-  var items = List<String>.generate(1000, (counter) => "Item $counter");
-  return items;
-}
-
-Widget getLongListView() {
-  var listItem = getListElements();
-  var listView = ListView.builder(itemBuilder: (context, index) {
-    if (index < listItem.length)
-      return ListTile(
-        leading: Icon(Icons.arrow_right),
-        title: Text(listItem[index]),
-        onTap: () {
-          showSnackBar(context, listItem[index]);
-        },
-      );
-  });
-
-  return listView;
+    );
+  }
 }
