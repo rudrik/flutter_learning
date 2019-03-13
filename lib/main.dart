@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: "Simple Interest calculator App",
     home: SIForm(),
+    theme: ThemeData(
+        primaryColor: Colors.indigo,
+        accentColor: Colors.indigoAccent,
+        brightness: Brightness.dark),
   ));
 }
 
@@ -21,6 +26,9 @@ class _SIFormState extends State<SIForm> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyle = Theme.of(context).textTheme.body1;
+
+
     return Scaffold(
       //resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -35,9 +43,11 @@ class _SIFormState extends State<SIForm> {
                 padding: EdgeInsets.only(
                     top: _minimumPadding, bottom: _minimumPadding),
                 child: TextField(
+                    style: textStyle,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         labelText: 'Principal',
+                        labelStyle: textStyle,
                         hintText: 'Enter Principal e.g. 12000',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(_minimumPadding),
@@ -46,10 +56,12 @@ class _SIFormState extends State<SIForm> {
                 padding: EdgeInsets.only(
                     top: _minimumPadding, bottom: _minimumPadding),
                 child: TextField(
+                    style: textStyle,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Rate of Interest',
                       hintText: 'In percent',
+                      labelStyle: textStyle,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(_minimumPadding),
                       ),
@@ -61,9 +73,11 @@ class _SIFormState extends State<SIForm> {
                   children: <Widget>[
                     Expanded(
                         child: TextField(
+                            style: textStyle,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               labelText: 'Term',
+                              labelStyle: textStyle,
                               hintText: 'Time in years',
                               border: OutlineInputBorder(
                                 borderRadius:
@@ -97,19 +111,34 @@ class _SIFormState extends State<SIForm> {
                         child: Container(
                       padding: EdgeInsets.only(left: _minimumPadding * 5),
                       child: RaisedButton(
-                          child: Text('Calculate'), onPressed: () {}),
+                          color: Theme.of(context).accentColor,
+                          textColor: Theme.of(context).primaryColorDark,
+                          child: Text(
+                            'Calculate',
+                            textScaleFactor: 1,
+                          ),
+                          onPressed: () {}),
                     )),
                     Expanded(
                       child: Container(
                           padding: EdgeInsets.only(left: _minimumPadding * 5),
                           child: RaisedButton(
-                              child: Text('Reset'), onPressed: () {})),
+                              color: Theme.of(context).primaryColorDark,
+                              textColor: Theme.of(context).primaryColorLight,
+                              child: Text(
+                                'Reset',
+                                textScaleFactor: 1,
+                              ),
+                              onPressed: () {})),
                     )
                   ],
                 )),
             Padding(
               padding: EdgeInsets.all(_minimumPadding),
-              child: Text('Todo Text'),
+              child: Text(
+                'Todo Text',
+                style: textStyle,
+              ),
             )
           ],
         ),
