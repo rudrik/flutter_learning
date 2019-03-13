@@ -24,10 +24,23 @@ class _SIFormState extends State<SIForm> {
   var _minimumPadding = 5.0;
   var _defaultCurrencies = 'Rupees';
 
+  var _currentlyItemSelected = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _currentlyItemSelected = _currencies[0];
+  }
+
+  TextEditingController principalController = TextEditingController();
+  TextEditingController roiController = TextEditingController();
+  TextEditingController termController = TextEditingController();
+
+  var showResult = '';
+
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.body1;
-
 
     return Scaffold(
       //resizeToAvoidBottomPadding: false,
@@ -45,6 +58,7 @@ class _SIFormState extends State<SIForm> {
                 child: TextField(
                     style: textStyle,
                     keyboardType: TextInputType.number,
+                    controller: principalController,
                     decoration: InputDecoration(
                         labelText: 'Principal',
                         labelStyle: textStyle,
@@ -57,6 +71,7 @@ class _SIFormState extends State<SIForm> {
                     top: _minimumPadding, bottom: _minimumPadding),
                 child: TextField(
                     style: textStyle,
+                    controller: roiController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Rate of Interest',
@@ -74,6 +89,7 @@ class _SIFormState extends State<SIForm> {
                     Expanded(
                         child: TextField(
                             style: textStyle,
+                            controller: termController,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               labelText: 'Term',
@@ -95,9 +111,9 @@ class _SIFormState extends State<SIForm> {
                           child: Text(value),
                         );
                       }).toList(),
-                      value: _defaultCurrencies,
+                      value: _currentlyItemSelected,
                       onChanged: (String newValueSelected) {
-                        setState(() {});
+                        _onDropDownItemSelected(newValueSelected);
                       },
                     ))
                   ],
@@ -117,7 +133,12 @@ class _SIFormState extends State<SIForm> {
                             'Calculate',
                             textScaleFactor: 1,
                           ),
-                          onPressed: () {}),
+                          onPressed: () {
+                            setState(() {
+                              showResult = _cauculateTotalReturns();
+                              FocusScope.of(context).requestFocus(new FocusNode());
+                            });
+                          }),
                     )),
                     Expanded(
                       child: Container(
@@ -129,14 +150,18 @@ class _SIFormState extends State<SIForm> {
                                 'Reset',
                                 textScaleFactor: 1,
                               ),
-                              onPressed: () {})),
+                              onPressed: () {
+                                setState(() {
+                                  _reset();
+                                });
+                              })),
                     )
                   ],
                 )),
             Padding(
               padding: EdgeInsets.all(_minimumPadding),
               child: Text(
-                'Todo Text',
+                this.showResult,
                 style: textStyle,
               ),
             )
@@ -157,5 +182,30 @@ class _SIFormState extends State<SIForm> {
       child: image,
       margin: EdgeInsets.all(_minimumPadding * 10),
     );
+  }
+
+  void _onDropDownItemSelected(String newValueSelected) {
+    setState(() {
+      this._currentlyItemSelected = newValueSelected;
+    });
+  }
+
+  String _cauculateTotalReturns() {
+    double principal = double.parse(principalController.text);
+    double roi = double.parse(roiController.text);
+    double term = double.parse(termController.text);
+
+    double totalAmountPayable = principal + (principal * roi * term) / 100;
+    String result =
+        'After $term years, your return will be $totalAmountPayable $_currentlyItemSelected';
+    return result;
+  }
+
+  void _reset() {
+    principalController.text = '';
+    roiController.text = '';
+    termController.text = '';
+    showResult = '';
+    _currentlyItemSelected = _currencies[0];
   }
 }
