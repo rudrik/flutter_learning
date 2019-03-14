@@ -171,7 +171,7 @@ class _SIFormState extends State<SIForm> {
                                 FocusScope.of(context)
                                     .requestFocus(new FocusNode());
                                 if (_formKey.currentState.validate()) {
-                                  showResult = _cauculateTotalReturns();
+                                  showResult = _calculateTotalReturns();
                                 }
                               });
                             }),
@@ -227,7 +227,7 @@ class _SIFormState extends State<SIForm> {
     });
   }
 
-  String _cauculateTotalReturns() {
+  String _calculateTotalReturns() {
     double principal = double.parse(principalController.text);
     double roi = double.parse(roiController.text);
     double term = double.parse(termController.text);
