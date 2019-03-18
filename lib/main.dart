@@ -22,6 +22,13 @@ class MyApp extends StatelessWidget {
 
 printFileContent() async {
   String fileContent = await downLoadFile();
+
+  print('The content of the file is $fileContent');
+//  Future<String> fileContent = downLoadFile();
+//
+//  fileContent.then((returnString) {
+//    print('The content of the file is $returnString');
+//  });
 }
 
 Future<String> downLoadFile() {
