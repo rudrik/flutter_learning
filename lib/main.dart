@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import './screens/note_list.dart';
-import './screens/note_details.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,4 +18,16 @@ class MyApp extends StatelessWidget {
       home: NoteList(),
     );
   }
+}
+
+printFileContent() async {
+  String fileContent = await downLoadFile();
+}
+
+Future<String> downLoadFile() {
+  Future<String> result = Future.delayed(Duration(seconds: 6), () {
+    return 'My file content';
+  });
+
+  return result;
 }
