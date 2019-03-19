@@ -68,7 +68,8 @@ class NoteListState extends State<NoteList> {
                 color: Colors.grey,
               ),
               onTap: () {
-                _delete(context, noteList[position]);
+                _askConfirmationDialog(context, noteList[position]);
+//              _delete(context, noteList[position]);
               },
             ),
             onTap: () {
@@ -149,5 +150,30 @@ class NoteListState extends State<NoteList> {
         });
       });
     });
+  }
+
+  void _askConfirmationDialog(BuildContext context, Note note) {
+    AlertDialog alertDialog = AlertDialog(
+      title: Text('Delete?'),
+      content: Text('Are you sure want to delete note'),
+      actions: <Widget>[
+        new FlatButton(
+            onPressed: () {
+              closeDialog(context);
+            },
+            child: new Text('No')),
+        new FlatButton(
+            onPressed: () {
+              closeDialog(context);
+              _delete(context, note);
+            },
+            child: Text('Yes'))
+      ],
+    );
+    showDialog(context: context, builder: (_) => alertDialog);
+  }
+
+  void closeDialog(BuildContext context) {
+    Navigator.pop(context);
   }
 }
