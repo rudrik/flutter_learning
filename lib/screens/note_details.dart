@@ -39,7 +39,7 @@ class NoteDetailsState extends State<NoteDetails> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.title;
+    TextStyle textStyle = Theme.of(context).textTheme.subhead;
 
     titleController.text = note.title;
     descriptionController.text = note.description;
@@ -129,7 +129,7 @@ class NoteDetailsState extends State<NoteDetails> {
                           textColor: Theme.of(context).primaryColorLight,
                           child: Text(
                             'Save',
-                            textScaleFactor: 1.5,
+                            textScaleFactor: 1,
                           ),
                         ),
                       ),
@@ -148,7 +148,7 @@ class NoteDetailsState extends State<NoteDetails> {
                           textColor: Theme.of(context).primaryColorLight,
                           child: Text(
                             'Delete',
-                            textScaleFactor: 1.5,
+                            textScaleFactor: 1,
                           ),
                         ),
                       ),
