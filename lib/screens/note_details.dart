@@ -124,7 +124,7 @@ class NoteDetailsState extends State<NoteDetails> {
                     //Fourth Element
                     Padding(
                       padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                      child: Row(
+                       child: Row(
                         children: <Widget>[
                           Expanded(
                             child: RaisedButton(
